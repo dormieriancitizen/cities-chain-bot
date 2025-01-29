@@ -7,10 +7,13 @@ load_dotenv()
 from discord.ext import commands
 
 # Load messages from a file
-with open("chain500.txt", "r") as file:
-    messages = file.read().splitlines()
+def message_file_reader():
+    with open("chain.txt", "r") as file:
+        for line in file:
+            yield line.rstrip()        
 
-message_cycle = itertools.islice(itertools.cycle(messages), len(messages))  # Cycle through messages repeatedly
+# message_cycle = itertools.islice(itertools.cycle(messages), len(messages))  # Cycle through messages repeatedly
+message_cycle = message_file_reader()
 turn_condition = asyncio.Condition()  # Ensures alternation
 current_bot_turn = 1  # Bot 1 starts first
 
@@ -42,14 +45,17 @@ async def send_message(bot, bot_id):
         async with turn_condition:
             await turn_condition.wait_for(lambda: current_bot_turn == bot_id)
             
-            message = "!"+next(message_cycle)
+            try:
+                message = "!" + next(message_cycle)
+            except StopIteration:
+                print(f"Bot {bot_id}: No more messages left in file.")
+                return
 
             command = await channel.send(message)
 
             last_city_file.seek(0)
             last_city_file.write(message)
             last_city_file.truncate()
-
             last_city_file.flush()
 
             print(f"Bot {bot_id}: Sent message -> {message}")
@@ -61,7 +67,6 @@ async def send_message(bot, bot_id):
                 await bot.wait_for('reaction_add',check=check)
             except:
                 await asyncio.sleep(5) 
-            await asyncio.sleep(0.3)
 
 @bot1.event
 async def on_ready(): # type: ignore

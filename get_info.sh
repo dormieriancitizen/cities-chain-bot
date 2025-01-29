@@ -13,6 +13,7 @@ python3 ../parseCityNames.py
 cd ..
 
 python3 chainGen.py > chain.txt
+cp chain.txt chain.txt.bak
 echo "Chain Length: $(wc -l chain.txt)"
 
 
