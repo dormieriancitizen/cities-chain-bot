@@ -22,9 +22,9 @@ intents = None  # Selfbots don't use intents
 bot1 = commands.Bot(command_prefix="!", self_bot=True, intents=intents)
 bot2 = commands.Bot(command_prefix="!", self_bot=True, intents=intents)
 
-TOKEN1: str = os.getenv("token1") # type: ignore
-TOKEN2: str = os.getenv("token2") # type: ignore
-TARGET_CHANNEL_ID = 1333931546616533025  # Replace with your channel ID
+TOKEN1: str = os.getenv("TOKEN1") # type: ignore
+TOKEN2: str = os.getenv("TOKEN2") # type: ignore
+TARGET_CHANNEL_ID = int(os.getenv("CHANNEL_ID"))  # Replace with your channel ID
 CITIES_CHAIN_UUID = 1126539776120606750
 
 last_city_file = open("last_city.txt","w")
