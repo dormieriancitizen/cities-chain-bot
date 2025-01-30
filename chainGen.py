@@ -6,6 +6,7 @@ import subprocess
 POP_LIMIT = 500
 
 def file_len(fname):
+    # the magic of getting someone else to do it for you
     p = subprocess.Popen(['wc', '-l', fname], stdout=subprocess.PIPE, 
                                               stderr=subprocess.PIPE)
     result, err = p.communicate()
