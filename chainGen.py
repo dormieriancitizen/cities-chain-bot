@@ -46,7 +46,7 @@ def city_chain(letter:str):
                 if not newletter.isalpha():
                     continue
                 # print(f"{newletter}: {counts[newletter]}")
-                if counts[letter] > 10 and counts[newletter] < 10:
+                if counts[letter] > 450 and counts[newletter] < 500:
                     # Try to find a better one
                     # print(f"{newletter} is nearly depleted, trying to find a better one")
                     continue
@@ -93,9 +93,9 @@ def city_chain(letter:str):
 
 # counts = {}
 # for letter in "qwertyuiopasdfghjklzxcvbnm":
-#     counts[letter] = len([city for city in city_chain(letter)])
-
+  # counts[letter] = len([city for city in city_chain(letter)])
+# 
 # print(counts)
-
+# 
 for city in city_chain("e"):
     print(city)
