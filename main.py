@@ -67,6 +67,7 @@ async def send_message(bot, bot_id):
             current_bot_turn = 3 - bot_id  # Switch between 1 and 2
             turn_condition.notify_all()
 
+            # await asyncio.sleep(0.1)
             try:
                 await bot.wait_for('reaction_add',check=check)
             except:
