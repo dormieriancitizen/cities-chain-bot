@@ -24,10 +24,11 @@ bot2 = commands.Bot(command_prefix="!", self_bot=True, intents=intents)
 
 TOKEN1: str = os.getenv("TOKEN1") # type: ignore
 TOKEN2: str = os.getenv("TOKEN2") # type: ignore
-TARGET_CHANNEL_ID = int(os.getenv("CHANNEL_ID"))  # Replace with your channel ID
+TARGET_CHANNEL_ID = int(os.getenv("CHANNEL_ID"))  # type: ignore
 CITIES_CHAIN_UUID = 1126539776120606750
 
 last_city_file = open("last_city.txt","w")
+used_file = open("used.txt","a")
 
 async def send_message(bot, bot_id):
     def check(reaction, user):
@@ -46,17 +47,20 @@ async def send_message(bot, bot_id):
             await turn_condition.wait_for(lambda: current_bot_turn == bot_id)
             
             try:
-                message = "!" + next(message_cycle)
+                message = next(message_cycle)
             except StopIteration:
                 print(f"Bot {bot_id}: No more messages left in file.")
                 return
 
-            command = await channel.send(message)
+            command = await channel.send("!"+message)
 
             last_city_file.seek(0)
             last_city_file.write(message)
             last_city_file.truncate()
             last_city_file.flush()
+
+            used_file.write("\n"+message)
+            used_file.flush()
 
             print(f"Bot {bot_id}: Sent message -> {message}")
 
