@@ -179,3 +179,4 @@ cities/
 last_city.txt
 *.zip
 *.txt
+*.bak

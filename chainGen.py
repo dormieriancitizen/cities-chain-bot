@@ -66,7 +66,12 @@ def city_chain(letter:str):
         for letterFileStem, file in cities_files.items():
             counts[letterFileStem] = file_len(f"cities/{letterFileStem}.txt")
 
-        used_cities = set()
+        used_cities: set[str] = set()
+
+        # with open("used.txt","r") as used:
+        #     for line in used:
+        #         used_cities.add(line.rstrip())
+
         city: str = ""
 
         while True:            
@@ -92,5 +97,5 @@ def city_chain(letter:str):
 
 # print(counts)
 
-for city in city_chain("k"):
+for city in city_chain("e"):
     print(city)
